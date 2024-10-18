@@ -23,4 +23,9 @@ describe('Fee Class', () => {
     const invalid_fee_1 = new Fee('', 800, '2024-10-23', 'servicios');
     expect(invalid_fee_1.validate()).toBe(false);
   });
+
+  it('should validate correctly that atleast the value must be greater than 0', () => {
+    const invalid_fee_2 = new Fee('Alquiler', 0, '2024-10-23', 'servicios');
+    expect(invalid_fee_2.validate()).toBe(false);
+  });
 });
