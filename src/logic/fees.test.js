@@ -33,4 +33,9 @@ describe('Fee Class', () => {
     const invalid_fee_3 = new Fee('Alquiler', -50, '2024-10-23', 'servicios');
     expect(invalid_fee_3.validate()).toBe(false);
   });
+
+  it('should validate correctly that the date is valid and never setted in the future', () => {
+    const invalid_fee_4 = new Fee('Alquiler', 0, '', 'servicios');
+    expect(invalid_fee_4.validate()).toBe(false);
+  });
 });
