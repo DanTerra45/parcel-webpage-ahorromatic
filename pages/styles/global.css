@@ -1,0 +1,106 @@
+body {
+    font-family: Roboto, sans-serif;
+    display: grid;
+    min-height: 100vh;
+    grid-template-rows: auto 1fr auto;
+    margin: 0;
+    padding: 0;
+}
+
+.main-header {
+    background-color: hsla(0, 0%, 0%, 1);
+    color: hsla(0, 0%, 100%, 1);
+    text-align: center;
+}
+
+.main-header h2 {
+    margin: 0;
+    padding: 0.5rem;
+}
+
+.no-special-linking-white {
+    color: hsla(0, 0%, 100%, 1);
+    text-decoration: none;
+}
+
+.no-special-linking-black {
+    color: hsla(0, 0%, 0%, 1);
+    text-decoration: none;
+}
+
+.nav-bar ul {
+    background-color: hsla(0, 0%, 25%, 1);
+    display: flex;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.nav-bar .icons-right {
+    margin-left: auto;
+}
+
+.nav-bar li {
+    display: inline-block;
+}
+
+.nav-bar li a {
+    color: hsla(0, 0%, 100%, 1);
+    text-align: center;
+    padding: 0.5rem;
+    text-decoration: none;
+}
+
+.nav-bar svg {
+    fill: hsla(0, 0%, 100%, 1);
+    margin-right: 0.2rem;
+    width: 1.3rem;
+    height: 1.3rem;
+}
+
+.icon-nav figure {
+    display: inline-flex;
+    align-items: center;
+    margin: 0;
+}
+
+.icon-nav figcaption {
+    font-size: 0.8rem;
+}
+
+.icon-nav {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.4rem 0.4rem;
+    text-decoration: none;
+    transition: background-color 0.1s;
+}
+
+.icon-nav:hover {
+    background-color: hsla(0, 0%, 0%, 1);
+}
+
+.footer-info {
+    background-color: hsla(0, 0%, 0%, 1);
+    color: hsla(0, 0%, 100%, 1);
+    text-align: center;
+    padding: 1px 0;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    margin-top: auto;
+}
+
+@media (max-width: 768px) {
+    .icon-nav {
+        margin-right: 0;
+    }
+
+    .icon-nav figcaption {
+        display: none;
+    }
+
+    .nav-bar svg {
+        margin-right: 0;
+    }
+}
