@@ -27,4 +27,9 @@ describe('Income Class', () => {
     const invalid_income_2 = new Income('Salario', 0, '2024-10-23');
     expect(invalid_income_2.validate()).toBe(false);
   });
+
+  it('should validate correctly that never the value is below 0', () => {
+    const invalid_income_3 = new Income('Salario', -100, '2024-10-23');
+    expect(invalid_income_3.validate()).toBe(false);
+  });
 });
