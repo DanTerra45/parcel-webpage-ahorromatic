@@ -14,4 +14,8 @@ describe('Fee Class', () => {
     expect(fee.category).toBe('servicios');
     expect(fee.type).toBe('fee');
   });
+
+  it('should validate correctly that what we previously introduced is fine (fee)', () => {
+    expect(fee.validate()).toBe(true);
+  });
 });
