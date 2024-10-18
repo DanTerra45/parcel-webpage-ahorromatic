@@ -32,4 +32,9 @@ describe('Income Class', () => {
     const invalid_income_3 = new Income('Salario', -100, '2024-10-23');
     expect(invalid_income_3.validate()).toBe(false);
   });
+
+  it('should validate correctly that the date is valid and never setted in the future', () => {
+    const invalid_income_4 = new Income('Salario', 50, '');
+    expect(invalid_income_4.validate()).toBe(false);
+  });
 });
