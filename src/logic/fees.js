@@ -11,7 +11,8 @@ export class Fee {
         const is_valid_description = this.description.trim().length > 0;
         const is_valid_amount = typeof this.amount === 'number' && this.amount > 0;
         const is_valid_date = !isNaN(new Date(this.date).getTime());
-        return is_valid_description && is_valid_amount && is_valid_date;
+        const is_valid_category = this.category.trim().length > 0;
+        return is_valid_description && is_valid_amount && is_valid_date && is_valid_category;
     }
 }
 

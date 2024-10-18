@@ -38,4 +38,9 @@ describe('Fee Class', () => {
     const invalid_fee_4 = new Fee('Alquiler', 0, '', 'servicios');
     expect(invalid_fee_4.validate()).toBe(false);
   });
+
+  it('should validate correctly that the it belongs to a existing category', () => {
+    const invalid_fee_5 = new Fee('Alquiler', 800, '2024-10-23', '');
+    expect(invalid_fee_5.validate()).toBe(false);
+  });
 });
