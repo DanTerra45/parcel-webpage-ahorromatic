@@ -18,4 +18,9 @@ describe('Fee Class', () => {
   it('should validate correctly that what we previously introduced is fine (fee)', () => {
     expect(fee.validate()).toBe(true);
   });
+
+  it('should validate correctly that the description at least have some characters on it', () => {
+    const invalid_fee_1 = new Fee('', 800, '2024-10-23', 'servicios');
+    expect(invalid_fee_1.validate()).toBe(false);
+  });
 });
