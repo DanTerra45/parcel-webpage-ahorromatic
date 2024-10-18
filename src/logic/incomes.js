@@ -8,7 +8,8 @@ export class Income {
 
     validate() {
         const is_valid_description = this.description.trim().length > 0;
-        return is_valid_description;
+        const is_valid_amount = typeof this.amount === 'number' && this.amount > 0;
+        return is_valid_description && is_valid_amount;
       }
 }
 
