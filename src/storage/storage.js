@@ -43,4 +43,9 @@ export class StorageService {
         data.fees.splice(index, 1);
         this.save_data(data);
     }
+
+    clear_all() {
+        localStorage.removeItem(this.storage_key);
+        this.initialize_storage();
+    }
 }
