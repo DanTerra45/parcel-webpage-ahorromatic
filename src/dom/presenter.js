@@ -27,6 +27,29 @@ export function setup_income_form() {
   });
 }
 
+export function setup_fee_form() {
+  const form = document.getElementById('fee-form');
+  if (!form) return;
+
+  form.addEventListener('submit', (event) => {
+    event.preventDefault();
+
+    const fee = new Fee(
+      document.getElementById('fee-description').value,
+      Number(document.getElementById('fee-amount').value),
+      document.getElementById('fee-date').value,
+      document.getElementById('fee-category').value
+    );
+
+    if (fee.validate()) {
+      storage.add_fee(fee);
+      render_fees();
+      render_summary();
+      form.reset();
+    }
+  });
+}
+
 document.body.addEventListener('click', (event) => {
   if (event.target.classList.contains('delete-income')) {
     const index = event.target.dataset.index;
