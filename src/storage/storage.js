@@ -26,5 +26,9 @@ export class StorageService {
 
     get_incomes() {
         return this.get_data().incomes;
-      }
+    }
+
+    get_fees() {
+        return this.get_data().fees;
+    }
 }
