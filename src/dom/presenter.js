@@ -59,6 +59,32 @@ export function render_incomes() {
   incomes_list.appendChild(fragment);
 }
 
+export function render_fees() {
+  const fees_list = document.getElementById('fees-list');
+  if (!fees_list) return;
+
+  const fees = storage.get_fees();
+  const fragment = document.createDocumentFragment();
+
+  fees.forEach((fee, index) => {
+    const fee_item = document.createElement('div');
+    fee_item.className = 'fee-item';
+
+    fee_item.innerHTML = `
+      <span>${fee.description}</span>
+      <span>${fee.amount.toFixed(2)} Bs</span>
+      <span>${new Date(fee.date).toLocaleDateString()}</span>
+      <span>${fee.category}</span>
+      <button class="delete-fee" data-index="${index}">Eliminar</button>
+    `;
+
+    fragment.appendChild(fee_item);
+  });
+
+  fees_list.innerHTML = '';
+  fees_list.appendChild(fragment);
+}
+
 export function setup_income_form() {
   const form = document.getElementById('income-form');
   if (!form) return;
