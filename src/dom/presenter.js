@@ -34,6 +34,31 @@ export function render_summary() {
   `;
 }
 
+export function render_incomes() {
+  const incomes_list = document.getElementById('incomes-list');
+  if (!incomes_list) return;
+
+  const incomes = storage.get_incomes();
+  const fragment = document.createDocumentFragment();
+
+  incomes.forEach((income, index) => {
+    const income_item = document.createElement('div');
+    income_item.className = 'income-item';
+
+    income_item.innerHTML = `
+      <span>${income.description}</span>
+      <span>${income.amount.toFixed(2)} Bs</span>
+      <span>${new Date(income.date).toLocaleDateString()}</span>
+      <button class="delete-income" data-index="${index}">Eliminar</button>
+    `;
+
+    fragment.appendChild(income_item);
+  });
+
+  incomes_list.innerHTML = '';
+  incomes_list.appendChild(fragment);
+}
+
 export function setup_income_form() {
   const form = document.getElementById('income-form');
   if (!form) return;
