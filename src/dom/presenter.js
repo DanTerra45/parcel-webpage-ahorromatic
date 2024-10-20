@@ -1,15 +1,22 @@
-import sumar from "./sumador";
+import { Income } from "../logic/incomes.js";
+import { Fee } from "../logic/fees.js";
+import { StorageService } from "../storage/storage.js";
+import { navigate_to } from "../routing/routing.js";
 
-const first = document.querySelector("#primer-numero");
-const second = document.querySelector("#segundo-numero");
-const form = document.querySelector("#sumar-form");
-const div = document.querySelector("#resultado-div");
+const storage = new StorageService();
 
-form.addEventListener("submit", (event) => {
-  event.preventDefault();
+document.body.addEventListener('click', (event) => {
+  if (event.target.classList.contains('delete-income')) {
+    const index = event.target.dataset.index;
+    storage.delete_income(index);
+    render_incomes();
+    render_summary();
+  }
 
-  const firstNumber = Number.parseInt(first.value);
-  const secondNumber = Number.parseInt(second.value);
-
-  div.innerHTML = "<p>" + sumar(firstNumber, secondNumber) + "</p>";
+  if (event.target.classList.contains('delete-fee')) {
+    const index = event.target.dataset.index;
+    storage.delete_fee(index);
+    render_fees();
+    render_summary();
+  }
 });
