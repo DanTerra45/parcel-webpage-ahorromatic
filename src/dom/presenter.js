@@ -5,6 +5,35 @@ import { navigate_to } from "../routing/routing.js";
 
 const storage = new StorageService();
 
+export function render_summary() {
+  const summary_div = document.getElementById('summary');
+  if (!summary_div) return;
+
+  const incomes = storage.get_incomes();
+  const fees = storage.get_fees();
+
+  const total_incomes = incomes.reduce((total, income) => total + income.amount, 0);
+  const total_fees = fees.reduce((total, fee) => total + fee.amount, 0);
+  const balance = total_incomes - total_fees;
+
+  summary_div.innerHTML = `
+    <div class="summary-cards">
+      <div class="card income-card">
+        <h3>Total Ingresos</h3>
+        <p>${total_incomes.toFixed(2)} Bs</p>
+      </div>
+      <div class="card fee-card">
+        <h3>Total Gastos</h3>
+        <p>${total_fees.toFixed(2)} Bs</p>
+      </div>
+      <div class="card balance-card">
+        <h3>Balance</h3>
+        <p>${balance.toFixed(2)} Bs</p>
+      </div>
+    </div>
+  `;
+}
+
 export function setup_income_form() {
   const form = document.getElementById('income-form');
   if (!form) return;
