@@ -59,4 +59,16 @@ const routes = {
       </form>
     </div>
     `,
+    '/register': `
+    <div class="register">
+      <h1>Registrarse</h1>
+      <form id="register_form" class="auth-form">
+        <input type="text" id="username" placeholder="Usuario" required>
+        <input type="email" id="email" placeholder="Email" required>
+        <input type="password" id="password" placeholder="Contraseña" required>
+        <input type="password" id="confirm_password" placeholder="Confirmar Contraseña" required>
+        <button type="submit">Registrarse</button>
+      </form>
+    </div>
+  `,
 };
