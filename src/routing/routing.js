@@ -71,4 +71,14 @@ const routes = {
       </form>
     </div>
   `,
+    '/login': `
+    <div class="login">
+        <h1>Inicia sesión</h1>
+        <form id="login_form" class="auth-form">
+        <input type="text" id="login_username" placeholder="Usuario" required>
+        <input type="password" id="login_password" placeholder="Contraseña" required>
+        <button type="submit">Ingresar</button>
+        </form>
+    </div>
+    `,
 };
