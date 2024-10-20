@@ -111,3 +111,37 @@ export function navigate_to(route, link) {
     window.history.pushState({}, '', path);
     initialize_page_handlers(path);
 }
+
+function initialize_page_handlers(route) {
+    const storage = new StorageService();
+
+    switch (route) {
+        case '/':
+            render_summary(storage);
+            break;
+        case '/incomes':
+            render_incomes(storage);
+            setup_income_form(storage);
+            break;
+        case '/fees':
+            render_fees(storage);
+            setup_fee_form(storage);
+            break;
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('a[router_link]').forEach(link => {
+        link.addEventListener('click', (event) => {
+            event.preventDefault();
+            const route = link.getAttribute('router_link');
+            navigate_to(route, link);
+        });
+    });
+
+    window.addEventListener('popstate', () => {
+        navigate_to(window.location.pathname);
+    });
+
+    navigate_to(window.location.pathname || '/');
+});
