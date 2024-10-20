@@ -7,4 +7,8 @@ export class StorageService {
     get_data() {
         return JSON.parse(localStorage.getItem(this.storage_key));
     }
+
+    save_data(data) {
+        localStorage.setItem(this.storage_key, JSON.stringify(data));
+    }
 }
