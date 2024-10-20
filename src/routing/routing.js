@@ -81,4 +81,24 @@ const routes = {
         </form>
     </div>
     `,
+    '/reports': `
+    <div class="reports">
+      <h1>Reportes</h1>
+      <div class="report-filters">
+        <select id="report_type">
+          <option value="all">Todos</option>
+          <option value="income">Ingresos</option>
+          <option value="expense">Gastos</option>
+        </select>
+        <input type="date" id="report_start_date" required>
+        <input type="date" id="report_end_date" required>
+        <select id="category_filter">
+          <option value="all">Todas las categorías</option>
+        </select>
+        <button onclick="window.generate_report()">Generar Reporte</button>
+      </div>
+      <div id="report_results" class="report-results"></div>
+      <div id="report_chart" class="report-chart"></div>
+    </div>
+    `
 };
