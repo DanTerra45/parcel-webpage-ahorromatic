@@ -9,5 +9,17 @@ const routes = {
         <h1>Resumen de tu actividad</h1>
         <div id="summary"></div>
       </div>
-    `
+    `,
+    '/incomes': `
+    <div class="incomes">
+      <h1>Registro de ingresos</h1>
+      <form id="income-form">
+        <input type="text" id="income-description" placeholder="Descripción" required>
+        <input type="number" id="income-amount" placeholder="Cantidad" required>
+        <input type="date" id="income-date" required>
+        <button type="submit">Agregar Ingreso</button>
+      </form>
+      <div id="incomes-list"></div>
+    </div>
+  `
 };
