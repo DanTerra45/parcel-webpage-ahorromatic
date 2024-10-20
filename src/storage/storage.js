@@ -3,4 +3,8 @@ export class StorageService {
         this.storage_key = storage_key;
         this.initialize_storage();
     }
+
+    get_data() {
+        return JSON.parse(localStorage.getItem(this.storage_key));
+    }
 }
