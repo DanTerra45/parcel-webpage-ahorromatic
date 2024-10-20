@@ -31,4 +31,10 @@ export class StorageService {
     get_fees() {
         return this.get_data().fees;
     }
+
+    delete_income(index) {
+        const data = this.get_data();
+        data.incomes.splice(index, 1);
+        this.save_data(data);
+    }
 }
