@@ -40,5 +40,23 @@ const routes = {
       </form>
       <div id="fees-list"></div>
     </div>
-  `
+    `,
+    '/settings': `
+    <div class="settings">
+      <h1>Configuraciónes</h1>
+      <form id="register_form" class="auth-form">
+      <label for="notifications">Activar Notificaciones</label>
+      <input type="checkbox" id="notifications" checked>
+      <label for="dark_mode">Modo Oscuro</label>
+      <input type="checkbox" id="dark_mode">
+      <label for="language">Preferir Formato de Idioma</label>
+      <select id="language">
+        <option value="es">Español</option>
+        <option value="en">Inglés</option>
+        <option value="fr">Francés</option>
+      </select>
+      <button type="submit">Guardar Cambios</button>
+      </form>
+    </div>
+    `,
 };
