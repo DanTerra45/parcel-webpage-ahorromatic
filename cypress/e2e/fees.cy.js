@@ -18,4 +18,11 @@ describe('Fee Management', () => {
     cy.get('.fee-item button').click();
     cy.get('.fee-item').should('not.exist');
   });
+
+  it('should validate fee form', () => {
+    cy.get('#fee-description').type('Test');
+    cy.get('#fee-amount').clear().type('800');
+    cy.get('#fee-form button').click();
+    cy.get('.fee-item').should('not.exist');
+  });
 });
