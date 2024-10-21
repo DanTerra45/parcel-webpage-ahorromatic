@@ -25,4 +25,11 @@ describe('Fee Management', () => {
     cy.get('#fee-form button').click();
     cy.get('.fee-item').should('not.exist');
   });
+
+  it('should persist fees after page reload', () => {
+    cy.add_fee('Alquiler', '800', '2024-10-23', 'servicios');
+    cy.reload();
+    cy.get('.fee-item').should('have.length', 1);
+    cy.get('.fee-item').should('contain', 'Alquiler');
+  });
 });
