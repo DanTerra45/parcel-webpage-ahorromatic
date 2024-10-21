@@ -12,4 +12,10 @@ describe('Fee Management', () => {
     cy.get('.fee-item').should('contain', '800.00 Bs');
     cy.get('.fee-item').should('contain', 'servicios');
   });
+
+  it('should delete a fee', () => {
+    cy.add_fee('Alquiler', '800', '2024-10-23', 'servicios');
+    cy.get('.fee-item button').click();
+    cy.get('.fee-item').should('not.exist');
+  });
 });
