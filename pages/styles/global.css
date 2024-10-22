@@ -104,3 +104,101 @@ body {
         margin-right: 0;
     }
 }
+
+/* Titles */
+.dashboard h1,
+.incomes h1,
+.fees h1,
+.settings h1,
+.login h1,
+.register h1,
+.reports h1 {
+    text-align: center;
+}
+
+/* Dynamic Content */
+.summary-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+    padding: 1rem;
+}
+
+.card {
+    background: white;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.income-card {
+    border-left: 4px solid #4CAF50;
+}
+
+.fee-card {
+    border-left: 4px solid #f44336;
+}
+
+.balance-card {
+    border-left: 4px solid #2196F3;
+}
+
+.list-container {
+    margin: 1rem;
+}
+
+.income-item {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr auto;
+    gap: 1rem;
+    padding: 0.5rem;
+    border-bottom: 1px solid #eee;
+    align-items: center;
+}
+
+.fee-item {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr auto;
+    gap: 1rem;
+    padding: 0.5rem;
+    border-bottom: 1px solid #eee;
+    align-items: center;
+}
+
+form {
+    display: grid;
+    gap: 1rem;
+    padding: 1rem;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+input,
+select,
+button {
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+button {
+    background-color: #2196F3;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #1976D2;
+}
+
+button.delete-income,
+button.delete-fee {
+    background-color: #f44336;
+}
+
+button.delete-income:hover,
+button.delete-fee:hover {
+    background-color: #d32f2f;
+}

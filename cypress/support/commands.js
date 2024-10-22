@@ -20,6 +20,18 @@
 // -- This is a dual command --
 // Cypress.Commands.add('dismiss', { prevSubject: 'optional'}, (subject, options) => { ... })
 //
-//
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+Cypress.Commands.add('add_fee', (description, amount, date, category) => {
+    cy.get('#fee-description').type(description);
+    cy.get('#fee-amount').type(amount);
+    cy.get('#fee-date').type(date);
+    cy.get('#fee-category').select(category);
+    cy.get('#fee-form button').click();
+});
+Cypress.Commands.add('add_income', (description, amount, date) => {
+    cy.get('#income-description').type(description);
+    cy.get('#income-amount').type(amount);
+    cy.get('#income-date').type(date);
+    cy.get('#income-form button').click();
+});

@@ -1,51 +1,60 @@
 export class StorageService {
     constructor(storage_key = 'ahorromatic_data') {
-        this.storage_key = storage_key;
-        this.initialize_storage();
+      this.storage_key = storage_key;
+      this.initialize_storage();
     }
-
+  
+    initialize_storage() {
+      if (!localStorage.getItem(this.storage_key)) {
+        localStorage.setItem(this.storage_key, JSON.stringify({
+          incomes: [],
+          fees: []
+        }));
+      }
+    }
+  
     get_data() {
-        return JSON.parse(localStorage.getItem(this.storage_key));
+      return JSON.parse(localStorage.getItem(this.storage_key));
     }
-
+  
     save_data(data) {
-        localStorage.setItem(this.storage_key, JSON.stringify(data));
+      localStorage.setItem(this.storage_key, JSON.stringify(data));
     }
-
+  
     add_income(income) {
-        const data = this.get_data();
-        data.incomes.push(income);
-        this.save_data(data);
+      const data = this.get_data();
+      data.incomes.push(income);
+      this.save_data(data);
     }
-
+  
     add_fee(fee) {
-        const data = this.get_data();
-        data.fees.push(fee);
-        this.save_data(data);
+      const data = this.get_data();
+      data.fees.push(fee);
+      this.save_data(data);
     }
-
+  
     get_incomes() {
-        return this.get_data().incomes;
+      return this.get_data().incomes;
     }
-
+  
     get_fees() {
-        return this.get_data().fees;
+      return this.get_data().fees;
     }
-
+  
     delete_income(index) {
-        const data = this.get_data();
-        data.incomes.splice(index, 1);
-        this.save_data(data);
+      const data = this.get_data();
+      data.incomes.splice(index, 1);
+      this.save_data(data);
     }
-
+  
     delete_fee(index) {
-        const data = this.get_data();
-        data.fees.splice(index, 1);
-        this.save_data(data);
+      const data = this.get_data();
+      data.fees.splice(index, 1);
+      this.save_data(data);
     }
-
+  
     clear_all() {
-        localStorage.removeItem(this.storage_key);
-        this.initialize_storage();
+      localStorage.removeItem(this.storage_key);
+      this.initialize_storage();
     }
-}
+  }
