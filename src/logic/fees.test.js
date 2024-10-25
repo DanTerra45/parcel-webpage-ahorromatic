@@ -1,4 +1,5 @@
 import { Fee } from '../logic/fees';
+import { calculate_total_fees } from '../logic/fees';
 
 describe('Fee Class', () => {
   let fee;
@@ -42,5 +43,21 @@ describe('Fee Class', () => {
   it('should validate correctly that the it belongs to a existing category', () => {
     const invalid_fee_5 = new Fee('Alquiler', 800, '2024-10-23', '');
     expect(invalid_fee_5.validate()).toBe(false);
+  });
+
+  describe('calculate_total_fees', () => {
+    it('debería devolver 0 si no hay tarifas', () => {
+      expect(calculate_total_fees([])).toBe(0);
+    });
+
+    it('debería sumar las tarifas correctamente', () => {
+      const fees = [{ amount: 10 }, { amount: 20 }, { amount: 30 }];
+      expect(calculate_total_fees(fees)).toBe(60);
+    });
+
+    it('debería manejar tarifas negativas', () => {
+      const fees = [{ amount: 10 }, { amount: -5 }];
+      expect(calculate_total_fees(fees)).toBe(5);
+    });
   });
 });
