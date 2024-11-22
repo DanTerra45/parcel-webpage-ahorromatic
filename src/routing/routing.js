@@ -16,8 +16,10 @@ const route_templates = {
 
 export function navigate_to(route, link) {
   const path = route.startsWith('/') ? route : `/${route}`;
-  main.innerHTML = routes[path] || '<h1>Oops, algo ha fallado.</h1>';
-  document.querySelectorAll('.icon_nav').forEach(nav => nav.classList.remove('active'));
+  main_element.innerHTML = route_templates[path] || '<h1 class="error-message">Oops, algo ha fallado.</h1>';
+  document.querySelectorAll('.icon_nav').forEach(nav_item => 
+    nav_item.classList.remove('active')
+  );
   if (link) link.classList.add('active');
   window.history.pushState({}, '', path);
   initialize_page_handlers(path);
