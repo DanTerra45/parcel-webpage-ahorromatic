@@ -36,6 +36,18 @@ export const templates = {
         <div id="fees_list"></div>
       </div>
     `,
+    savings_goals: `
+    <div class="savings-goals">
+      <h1>Metas de Ahorro</h1>
+      <form id="savings-goal-form" class="savings-form">
+        <input type="text" id="goal_description" placeholder="Descripción de la meta" required>
+        <input type="number" id="goal_amount" placeholder="Cantidad objetivo" required>
+        <input type="date" id="goal_date" required>
+        <button type="submit">Establecer Meta</button>
+      </form>
+      <div id="savings_goals_list"></div>
+    </div>
+    `,
     settings: `
       <div class="settings">
         <h1>Configuraciónes</h1>
