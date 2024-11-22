@@ -1,6 +1,6 @@
 import { StorageService } from '../storage/storage.js';
 import { templates } from './templates.js';
-import { render_summary, render_incomes, render_fees, setup_income_form, setup_fee_form } from '../dom/presenter.js';
+import { render_summary, render_incomes, render_fees, setup_income_form, setup_fee_form, setup_report_form, render_savings_goals, setup_savings_goal_form } from '../dom/presenter.js';
 
 const main_element = document.querySelector('main');
 
@@ -12,12 +12,13 @@ const route_templates = {
   '/register': templates.register,
   '/login': templates.login,
   '/reports': templates.reports,
+  '/savings-goals': templates.savings_goals,
 };
 
 export function navigate_to(route, link) {
   const path = route.startsWith('/') ? route : `/${route}`;
   main_element.innerHTML = route_templates[path] || '<h1 class="error-message">Oops, algo ha fallado.</h1>';
-  document.querySelectorAll('.icon_nav').forEach(nav_item => 
+  document.querySelectorAll('.icon_nav').forEach(nav_item =>
     nav_item.classList.remove('active')
   );
   if (link) link.classList.add('active');
@@ -37,6 +38,10 @@ function initialize_page_handlers(route) {
       render_fees(storage);
       setup_fee_form(storage);
     },
+    '/savings-goals': () => {
+      render_savings_goals(storage);
+      setup_savings_goal_form(storage);
+    },
     '/reports': () => {
       setup_report_form(storage);
       const categories = [...new Set(storage.get_fees().map(fee => fee.category))];
@@ -44,9 +49,9 @@ function initialize_page_handlers(route) {
       if (category_select) {
         category_select.innerHTML = `
           <option value="all">Todas las categorías</option>
-          ${categories.map(category => 
-            `<option value="${category}">${category}</option>`
-          ).join('')}
+          ${categories.map(category =>
+          `<option value="${category}">${category}</option>`
+        ).join('')}
         `;
       }
     }
@@ -55,7 +60,7 @@ function initialize_page_handlers(route) {
   if (handler) handler();
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+function setup_route_listeners() {
   document.querySelectorAll('a[router_link]').forEach(link => {
     link.addEventListener('click', (event) => {
       event.preventDefault();
@@ -63,10 +68,10 @@ document.addEventListener('DOMContentLoaded', () => {
       navigate_to(route, link);
     });
   });
-
   window.addEventListener('popstate', () => {
     navigate_to(window.location.pathname);
   });
-
   navigate_to(window.location.pathname || '/');
-});
+}
+
+document.addEventListener('DOMContentLoaded', setup_route_listeners);
