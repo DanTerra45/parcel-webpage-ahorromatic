@@ -12,7 +12,6 @@ const route_templates = {
   '/register': templates.register,
   '/login': templates.login,
   '/reports': templates.reports,
-  '/savings-goals': templates.savings_goals
 };
 
 export function navigate_to(route, link) {
@@ -26,20 +25,32 @@ export function navigate_to(route, link) {
 
 function initialize_page_handlers(route) {
   const storage = new StorageService();
-
-  switch (route) {
-    case '/':
-      render_summary(storage);
-      break;
-    case '/incomes':
+  const route_handlers = {
+    '/': () => render_summary(storage),
+    '/incomes': () => {
       render_incomes(storage);
       setup_income_form(storage);
-      break;
-    case '/fees':
+    },
+    '/fees': () => {
       render_fees(storage);
       setup_fee_form(storage);
-      break;
-  }
+    },
+    '/reports': () => {
+      setup_report_form(storage);
+      const categories = [...new Set(storage.get_fees().map(fee => fee.category))];
+      const category_select = document.getElementById('report_category');
+      if (category_select) {
+        category_select.innerHTML = `
+          <option value="all">Todas las categorías</option>
+          ${categories.map(category => 
+            `<option value="${category}">${category}</option>`
+          ).join('')}
+        `;
+      }
+    }
+  };
+  const handler = route_handlers[route];
+  if (handler) handler();
 }
 
 document.addEventListener('DOMContentLoaded', () => {
