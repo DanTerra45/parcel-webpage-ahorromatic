@@ -28,6 +28,18 @@ export class StorageService {
       data.fees.push(fee);
       this.save_data(data);
     }
+    add_savings_goal(goal) {
+      const data = this.get_data();
+      if (!data.savings_goals) {
+        data.savings_goals = [];
+      }
+      data.savings_goals.push(goal);
+      this.save_data(data);
+    }
+    get_savings_goals() {
+      const data = this.get_data();
+      return data.savings_goals || [];
+    }
     get_incomes() {
       return this.get_data().incomes;
     }
