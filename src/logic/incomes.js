@@ -1,3 +1,5 @@
+import { validate_common_fields } from './validation.js';
+
 export class Income {
     constructor(description, amount, date) {
         this.description = description;
@@ -5,13 +7,9 @@ export class Income {
         this.date = date;
         this.type = 'income';
     }
-
     validate() {
-        const is_valid_description = this.description.trim().length > 0;
-        const is_valid_amount = typeof this.amount === 'number' && this.amount > 0;
-        const is_valid_date = !isNaN(new Date(this.date).getTime());
-        return is_valid_description && is_valid_amount && is_valid_date;
-      }
+        return validate_common_fields(this);
+    }
 }
 
 export const calculate_total_incomes = (incomes) => {
