@@ -1,6 +1,3 @@
-import { Income } from "../logic/incomes.js";
-import { Fee } from "../logic/fees.js";
-import { StorageService } from "../storage/storage.js";
 import { navigate_to } from "../routing/routing.js";
 
 const storage = new StorageService();
