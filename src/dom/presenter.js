@@ -117,26 +117,24 @@ export function render_savings_goals(storage) {
   }
 }
 
-export function setup_income_form() {
+export function setup_income_form(storage) {
   const form = document.getElementById('income-form');
   if (!form) return;
-
-  form.addEventListener('submit', (event) => {
-    event.preventDefault();
-
-    const income = new Income(
-      document.getElementById('income-description').value,
-      Number(document.getElementById('income-amount').value),
-      document.getElementById('income-date').value
-    );
-
-    if (income.validate()) {
-      storage.add_income(income);
-      render_incomes();
-      render_summary();
-      form.reset();
-    }
-  });
+  form.onsubmit = (render_event) => {
+    render_event.preventDefault();
+    const description = document.getElementById('income_description').value;
+    const amount = document.getElementById('income_amount').value;
+    const date = document.getElementById('income_date').value;
+    storage.add_income({ description, amount, date });
+    render_incomes(storage);
+    render_summary(storage);
+    form.reset();
+  };
+  window.delete_income = (index) => {
+    storage.delete_income(index);
+    render_incomes(storage);
+    render_summary(storage);
+  };
 }
 
 export function setup_fee_form() {
