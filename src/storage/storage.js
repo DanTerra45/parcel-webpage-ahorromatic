@@ -74,6 +74,13 @@ export class StorageService {
       data.fees.splice(index, 1);
       this.save_data(data);
     }
+    delete_savings_goal(index) {
+      const data = this.get_data();
+      if (data.savings_goals) {
+        data.savings_goals.splice(index, 1);
+        this.save_data(data);
+      }
+    }
     clear_all() {
       localStorage.removeItem(this.storage_key);
       this.initialize_storage();
