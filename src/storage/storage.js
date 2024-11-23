@@ -53,6 +53,13 @@ export class StorageService {
         return income_date >= new Date(start_date) && income_date <= new Date(end_date);
       });
     }
+    get_fees_by_period(start_date, end_date) {
+      const fees = this.get_fees();
+      return fees.filter(fee => {
+        const fee_date = new Date(fee.date);
+        return fee_date >= new Date(start_date) && fee_date <= new Date(end_date);
+      });
+    }
     delete_income(index) {
       const data = this.get_data();
       data.incomes.splice(index, 1);
