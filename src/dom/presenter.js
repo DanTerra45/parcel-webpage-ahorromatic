@@ -45,7 +45,8 @@ export function render_incomes(storage) {
       </div>
     `;
     incomes_list.querySelector('.list').classList.add('active');
-  } else {
+  } 
+  else {
     incomes_list.innerHTML = '';
   }
 }
@@ -71,8 +72,48 @@ export function render_fees(storage) {
       </div>
     `;
     fees_list.querySelector('.list').classList.add('active');
-  } else {
+  } 
+  else {
     fees_list.innerHTML = '';
+  }
+}
+
+export function render_savings_goals(storage) {
+  const goals_list = document.getElementById('savings_goals_list');
+  if (!goals_list) return;
+  const goals = storage.get_savings_goals();
+  const incomes = storage.get_incomes();
+  const fees = storage.get_fees();
+  const total_savings = incomes.reduce((sum, income) => sum + Number(income.amount), 0) - fees.reduce((sum, fee) => sum + Number(fee.amount), 0);
+  if (goals && goals.length > 0) {
+    goals_list.innerHTML = `
+      <div class="list">
+        <h2>Tus Metas de Ahorro</h2>
+        ${goals.map((goal, index) => {
+          const progress = (total_savings / Number(goal.amount)) * 100;
+          const progress_capped = Math.min(100, Math.max(0, progress));
+          return `
+            <div class="list-item goal-item">
+              <div class="item-info">
+                <p class="description">${goal.description}</p>
+                <p class="amount">Meta: $${Number(goal.amount).toFixed(2)}</p>
+                <p class="date">Fecha objetivo: ${goal.date}</p>
+                <div class="progress-bar">
+                  <div class="progress" style="width: ${progress_capped}%"></div>
+                </div>
+                <p class="progress-text">Progreso: ${progress_capped.toFixed(1)}%</p>
+                <p class="savings-amount">Ahorrado: $${total_savings.toFixed(2)}</p>
+              </div>
+              <button onclick="window.delete_savings_goal(${index})">Eliminar</button>
+            </div>
+          `;
+        }).join('')}
+      </div>
+    `;
+    goals_list.querySelector('.list').classList.add('active');
+  } 
+  else {
+    goals_list.innerHTML = '';
   }
 }
 
