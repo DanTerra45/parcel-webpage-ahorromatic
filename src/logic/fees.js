@@ -1,3 +1,5 @@
+import { validate_common_fields } from './validation.js';
+
 export class Fee {
     constructor(description, amount, date, category) {
         this.description = description;
@@ -7,11 +9,9 @@ export class Fee {
         this.type = 'fee';
     }
     validate() {
-        const is_valid_description = this.description.trim().length > 0;
-        const is_valid_amount = typeof this.amount === 'number' && this.amount > 0;
-        const is_valid_date = !isNaN(new Date(this.date).getTime());
-        const is_valid_category = this.category.trim().length > 0;
-        return is_valid_description && is_valid_amount && is_valid_date && is_valid_category;
+        const common_validation = validate_common_fields(this);
+        const is_valid_category = this.category && this.category.trim().length > 0;
+        return common_validation && is_valid_category;
     }
 }
 
