@@ -187,5 +187,26 @@ export function setup_report_form(storage) {
     const category = document.getElementById('report_category').value;
     let html = '';
     let has_content = false;
+    if (type === 'all' || type === 'income') {
+      const period_incomes = storage.get_incomes_by_period(start_date, end_date);
+      const total_incomes = period_incomes.reduce((sum, income) => sum + Number(income.amount), 0);
+      if (period_incomes.length > 0) {
+        has_content = true;
+        html += `
+          <div class="list">
+            <h2>Resultados del Reporte</h2>
+            <div class="report-section">
+              <h3>Ingresos</h3>
+              <p>Total: $${total_incomes.toFixed(2)}</p>
+              <ul>
+                ${period_incomes.map(income => `
+                  <li>${income.description}: $${Number(income.amount).toFixed(2)} (${income.date})</li>
+                `).join('')}
+              </ul>
+            </div>
+          </div>
+        `;
+      }
+    }
   }
 };
