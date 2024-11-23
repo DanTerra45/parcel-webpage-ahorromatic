@@ -2,31 +2,25 @@ import { navigate_to } from "../routing/routing.js";
 
 const storage = new StorageService();
 
-export function render_summary() {
-  const summary_div = document.getElementById('summary');
-  if (!summary_div) return;
-
+export function render_summary(storage) {
+  const summary_element = document.getElementById('summary');
   const incomes = storage.get_incomes();
   const fees = storage.get_fees();
-
-  const total_incomes = incomes.reduce((total, income) => total + income.amount, 0);
-  const total_fees = fees.reduce((total, fee) => total + fee.amount, 0);
+  const total_incomes = incomes.reduce((sum, income) => sum + Number(income.amount), 0);
+  const total_fees = fees.reduce((sum, fee) => sum + Number(fee.amount), 0);
   const balance = total_incomes - total_fees;
-
-  summary_div.innerHTML = `
-    <div class="summary-cards">
-      <div class="card income-card">
-        <h3>Total Ingresos</h3>
-        <p>${total_incomes.toFixed(2)} Bs</p>
-      </div>
-      <div class="card fee-card">
-        <h3>Total Gastos</h3>
-        <p>${total_fees.toFixed(2)} Bs</p>
-      </div>
-      <div class="card balance-card">
-        <h3>Balance</h3>
-        <p>${balance.toFixed(2)} Bs</p>
-      </div>
+  summary_element.innerHTML = `
+    <div class="summary-card">
+      <h2>Balance Total</h2>
+      <p class="amount ${balance >= 0 ? 'positive' : 'negative'}"> Bs${balance.toFixed(2)}</p>
+    </div>
+    <div class="summary-card">
+      <h2>Ingresos Totales</h2>
+      <p class="amount positive"> Bs${total_incomes.toFixed(2)}</p>
+    </div>
+    <div class="summary-card">
+      <h2>Gastos Totales</h2>
+      <p class="amount negative"> Bs${total_fees.toFixed(2)}</p>
     </div>
   `;
 }
