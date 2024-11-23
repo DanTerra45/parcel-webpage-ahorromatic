@@ -137,27 +137,25 @@ export function setup_income_form(storage) {
   };
 }
 
-export function setup_fee_form() {
+export function setup_fee_form(storage) {
   const form = document.getElementById('fee-form');
   if (!form) return;
-
-  form.addEventListener('submit', (event) => {
-    event.preventDefault();
-
-    const fee = new Fee(
-      document.getElementById('fee-description').value,
-      Number(document.getElementById('fee-amount').value),
-      document.getElementById('fee-date').value,
-      document.getElementById('fee-category').value
-    );
-
-    if (fee.validate()) {
-      storage.add_fee(fee);
-      render_fees();
-      render_summary();
-      form.reset();
-    }
-  });
+  form.onsubmit = (render_event) => {
+    render_event.preventDefault();
+    const description = document.getElementById('fee_description').value;
+    const amount = document.getElementById('fee_amount').value;
+    const date = document.getElementById('fee_date').value;
+    const category = document.getElementById('fee_category').value;
+    storage.add_fee({ description, amount, date, category });
+    render_fees(storage);
+    render_summary(storage);
+    form.reset();
+  };
+  window.delete_fee = (index) => {
+    storage.delete_fee(index);
+    render_fees(storage);
+    render_summary(storage);
+  };
 }
 
 document.body.addEventListener('click', (event) => {
