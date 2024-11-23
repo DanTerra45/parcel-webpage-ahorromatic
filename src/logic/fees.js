@@ -6,7 +6,6 @@ export class Fee {
         this.category = category;
         this.type = 'fee';
     }
-
     validate() {
         const is_valid_description = this.description.trim().length > 0;
         const is_valid_amount = typeof this.amount === 'number' && this.amount > 0;
