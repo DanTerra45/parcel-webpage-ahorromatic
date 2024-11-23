@@ -1,7 +1,5 @@
 import { navigate_to } from "../routing/routing.js";
 
-const storage = new StorageService();
-
 export function render_summary(storage) {
   const summary_element = document.getElementById('summary');
   const incomes = storage.get_incomes();
@@ -235,5 +233,9 @@ export function setup_report_form(storage) {
         html += '</div>';
       }
     }
+  }
+  results_div.innerHTML = html;
+  if (has_content) {
+    results_div.querySelector('.list').classList.add('active');
   }
 };
