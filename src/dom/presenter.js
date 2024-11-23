@@ -50,30 +50,30 @@ export function render_incomes(storage) {
   }
 }
 
-export function render_fees() {
-  const fees_list = document.getElementById('fees-list');
-  if (!fees_list) return;
-
+export function render_fees(storage) {
+  const fees_list = document.getElementById('fees_list');
   const fees = storage.get_fees();
-  const fragment = document.createDocumentFragment();
-
-  fees.forEach((fee, index) => {
-    const fee_item = document.createElement('div');
-    fee_item.className = 'fee-item';
-
-    fee_item.innerHTML = `
-      <span>${fee.description}</span>
-      <span>${fee.amount.toFixed(2)} Bs</span>
-      <span>${new Date(fee.date).toLocaleDateString()}</span>
-      <span>${fee.category}</span>
-      <button class="delete-fee" data-index="${index}">Eliminar</button>
+  if (fees && fees.length > 0) {
+    fees_list.innerHTML = `
+      <div class="list">
+        <h2>Lista de Gastos</h2>
+        ${fees.map((fee, index) => `
+          <div class="list-item">
+            <div class="item-info">
+              <p class="description">${fee.description}</p>
+              <p class="amount">$${Number(fee.amount).toFixed(2)}</p>
+              <p class="date">${fee.date}</p>
+              <p class="category">${fee.category}</p>
+            </div>
+            <button onclick="window.delete_fee(${index})">Eliminar</button>
+          </div>
+        `).join('')}
+      </div>
     `;
-
-    fragment.appendChild(fee_item);
-  });
-
-  fees_list.innerHTML = '';
-  fees_list.appendChild(fragment);
+    fees_list.querySelector('.list').classList.add('active');
+  } else {
+    fees_list.innerHTML = '';
+  }
 }
 
 export function setup_income_form() {
