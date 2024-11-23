@@ -158,6 +158,24 @@ export function setup_fee_form(storage) {
   };
 }
 
+export function setup_savings_goal_form(storage) {
+  const form = document.getElementById('savings-goal-form');
+  if (!form) return;
+  form.onsubmit = (render_event) => {
+    render_event.preventDefault();
+    const description = document.getElementById('goal_description').value;
+    const amount = document.getElementById('goal_amount').value;
+    const date = document.getElementById('goal_date').value;
+    storage.add_savings_goal({ description, amount, date });
+    render_savings_goals(storage);
+    form.reset();
+  };
+  window.delete_savings_goal = (index) => {
+    storage.delete_savings_goal(index);
+    render_savings_goals(storage);
+  };
+}
+
 document.body.addEventListener('click', (event) => {
   if (event.target.classList.contains('delete-income')) {
     const index = event.target.dataset.index;
