@@ -209,4 +209,31 @@ export function setup_report_form(storage) {
       }
     }
   }
+  if (type === 'all' || type === 'fee') {
+    const period_fees = storage.get_fees_by_period_and_category(start_date, end_date, category);
+    const total_fees = period_fees.reduce((sum, fee) => sum + Number(fee.amount), 0);
+    if (period_fees.length > 0) {
+      hasContent = true;
+      if (!html) {
+        html += `
+          <div class="list">
+            <h2>Resultados del Reporte</h2>
+        `;
+      }
+      html += `
+        <div class="report-section">
+          <h3>Gastos</h3>
+          <p>Total: $${total_fees.toFixed(2)}</p>
+          <ul>
+            ${period_fees.map(fee => `
+              <li>${fee.description}: $${Number(fee.amount).toFixed(2)} (${fee.date}) - ${fee.category}</li>
+            `).join('')}
+          </ul>
+        </div>
+      `;
+      if (html.includes('<div class="list">')) {
+        html += '</div>';
+      }
+    }
+  }
 };
