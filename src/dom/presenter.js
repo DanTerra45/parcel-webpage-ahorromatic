@@ -176,18 +176,16 @@ export function setup_savings_goal_form(storage) {
   };
 }
 
-document.body.addEventListener('click', (event) => {
-  if (event.target.classList.contains('delete-income')) {
-    const index = event.target.dataset.index;
-    storage.delete_income(index);
-    render_incomes();
-    render_summary();
+export function setup_report_form(storage) {
+  const generate_btn = document.getElementById('generate_report_btn');
+  const results_div = document.getElementById('report_results');
+  if (!generate_btn) return;
+  generate_btn.onclick = () => {
+    const type = document.getElementById('report_type').value;
+    const start_date = document.getElementById('report_start_date').value;
+    const end_date = document.getElementById('report_end_date').value;
+    const category = document.getElementById('report_category').value;
+    let html = '';
+    let has_content = false;
   }
-
-  if (event.target.classList.contains('delete-fee')) {
-    const index = event.target.dataset.index;
-    storage.delete_fee(index);
-    render_fees();
-    render_summary();
-  }
-});
+};
