@@ -25,29 +25,29 @@ export function render_summary(storage) {
   `;
 }
 
-export function render_incomes() {
-  const incomes_list = document.getElementById('incomes-list');
-  if (!incomes_list) return;
-
+export function render_incomes(storage) {
+  const incomes_list = document.getElementById('incomes_list');
   const incomes = storage.get_incomes();
-  const fragment = document.createDocumentFragment();
-
-  incomes.forEach((income, index) => {
-    const income_item = document.createElement('div');
-    income_item.className = 'income-item';
-
-    income_item.innerHTML = `
-      <span>${income.description}</span>
-      <span>${income.amount.toFixed(2)} Bs</span>
-      <span>${new Date(income.date).toLocaleDateString()}</span>
-      <button class="delete-income" data-index="${index}">Eliminar</button>
+  if (incomes && incomes.length > 0) {
+    incomes_list.innerHTML = `
+      <div class="list">
+        <h2>Lista de Ingresos</h2>
+        ${incomes.map((income, index) => `
+          <div class="list-item">
+            <div class="item-info">
+              <p class="description">${income.description}</p>
+              <p class="amount">$${Number(income.amount).toFixed(2)}</p>
+              <p class="date">${income.date}</p>
+            </div>
+            <button onclick="window.delete_income(${index})">Eliminar</button>
+          </div>
+        `).join('')}
+      </div>
     `;
-
-    fragment.appendChild(income_item);
-  });
-
-  incomes_list.innerHTML = '';
-  incomes_list.appendChild(fragment);
+    incomes_list.querySelector('.list').classList.add('active');
+  } else {
+    incomes_list.innerHTML = '';
+  }
 }
 
 export function render_fees() {
