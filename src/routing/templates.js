@@ -101,7 +101,7 @@ export const templates = {
           <select id="report_type">
             <option value="all">Todos</option>
             <option value="income">Ingresos</option>
-            <option value="expense">Gastos</option>
+            <option value="fee">Gastos</option>
           </select>
           <input type="date" id="report_start_date" required>
           <input type="date" id="report_end_date" required>
