@@ -8,17 +8,17 @@ export function render_summary(storage) {
   const total_fees = fees.reduce((sum, fee) => sum + Number(fee.amount), 0);
   const balance = total_incomes - total_fees;
   summary_element.innerHTML = `
-    <div class="summary-card">
+    <div class="balance-card summary-card">
       <h2>Balance Total</h2>
-      <p class="amount ${balance >= 0 ? 'positive' : 'negative'}"> Bs${balance.toFixed(2)}</p>
+      <p class="amount ${balance >= 0 ? 'positive' : 'negative'}">${balance.toFixed(2)} Bs</p>
     </div>
-    <div class="summary-card">
+    <div class="income-card summary-card">
       <h2>Ingresos Totales</h2>
-      <p class="amount positive"> Bs${total_incomes.toFixed(2)}</p>
+      <p class="amount positive">${total_incomes.toFixed(2)} Bs</p>
     </div>
-    <div class="summary-card">
+    <div class="fee-card summary-card">
       <h2>Gastos Totales</h2>
-      <p class="amount negative"> Bs${total_fees.toFixed(2)}</p>
+      <p class="amount negative">${total_fees.toFixed(2)} Bs</p>
     </div>
   `;
 }
@@ -31,10 +31,10 @@ export function render_incomes(storage) {
       <div class="list">
         <h2>Lista de Ingresos</h2>
         ${incomes.map((income, index) => `
-          <div class="list-item">
+          <div class="income-item list-item">
             <div class="item-info">
               <p class="description">${income.description}</p>
-              <p class="amount">$${Number(income.amount).toFixed(2)}</p>
+              <p class="amount">${Number(income.amount).toFixed(2)} Bs</p>
               <p class="date">${income.date}</p>
             </div>
             <button onclick="window.delete_income(${index})">Eliminar</button>
@@ -57,10 +57,10 @@ export function render_fees(storage) {
       <div class="list">
         <h2>Lista de Gastos</h2>
         ${fees.map((fee, index) => `
-          <div class="list-item">
+          <div class="fee-item list-item">
             <div class="item-info">
               <p class="description">${fee.description}</p>
-              <p class="amount">$${Number(fee.amount).toFixed(2)}</p>
+              <p class="amount">${Number(fee.amount).toFixed(2)} Bs</p>
               <p class="date">${fee.date}</p>
               <p class="category">${fee.category}</p>
             </div>
@@ -94,13 +94,13 @@ export function render_savings_goals(storage) {
             <div class="list-item goal-item">
               <div class="item-info">
                 <p class="description">${goal.description}</p>
-                <p class="amount">Meta: $${Number(goal.amount).toFixed(2)}</p>
+                <p class="amount">Meta: ${Number(goal.amount).toFixed(2)} Bs</p>
                 <p class="date">Fecha objetivo: ${goal.date}</p>
                 <div class="progress-bar">
                   <div class="progress" style="width: ${progress_capped}%"></div>
                 </div>
                 <p class="progress-text">Progreso: ${progress_capped.toFixed(1)}%</p>
-                <p class="savings-amount">Ahorrado: $${total_savings.toFixed(2)}</p>
+                <p class="savings-amount">Ahorrado: ${total_savings.toFixed(2)} Bs</p>
               </div>
               <button onclick="window.delete_savings_goal(${index})">Eliminar</button>
             </div>
@@ -121,7 +121,7 @@ export function setup_income_form(storage) {
   form.onsubmit = (render_event) => {
     render_event.preventDefault();
     const description = document.getElementById('income_description').value;
-    const amount = document.getElementById('income_amount').value;
+    const amount = Number(document.getElementById('income_amount').value);
     const date = document.getElementById('income_date').value;
     storage.add_income({ description, amount, date });
     render_incomes(storage);
@@ -141,7 +141,7 @@ export function setup_fee_form(storage) {
   form.onsubmit = (render_event) => {
     render_event.preventDefault();
     const description = document.getElementById('fee_description').value;
-    const amount = document.getElementById('fee_amount').value;
+    const amount = Number(document.getElementById('fee_amount').value);
     const date = document.getElementById('fee_date').value;
     const category = document.getElementById('fee_category').value;
     storage.add_fee({ description, amount, date, category });
@@ -162,7 +162,7 @@ export function setup_savings_goal_form(storage) {
   form.onsubmit = (render_event) => {
     render_event.preventDefault();
     const description = document.getElementById('goal_description').value;
-    const amount = document.getElementById('goal_amount').value;
+    const amount = Number(document.getElementById('goal_amount').value);
     const date = document.getElementById('goal_date').value;
     storage.add_savings_goal({ description, amount, date });
     render_savings_goals(storage);
@@ -195,10 +195,10 @@ export function setup_report_form(storage) {
             <h2>Resultados del Reporte</h2>
             <div class="report-section">
               <h3>Ingresos</h3>
-              <p>Total: $${total_incomes.toFixed(2)}</p>
+              <p>Total: ${total_incomes.toFixed(2)} Bs</p>
               <ul>
                 ${period_incomes.map(income => `
-                  <li>${income.description}: $${Number(income.amount).toFixed(2)} (${income.date})</li>
+                  <li>${income.description}: ${Number(income.amount).toFixed(2)} Bs (${income.date})</li>
                 `).join('')}
               </ul>
             </div>
@@ -206,36 +206,36 @@ export function setup_report_form(storage) {
         `;
       }
     }
-  }
-  if (type === 'all' || type === 'fee') {
-    const period_fees = storage.get_fees_by_period_and_category(start_date, end_date, category);
-    const total_fees = period_fees.reduce((sum, fee) => sum + Number(fee.amount), 0);
-    if (period_fees.length > 0) {
-      hasContent = true;
-      if (!html) {
+    if (type === 'all' || type === 'fee') {
+      const period_fees = storage.get_fees_by_period_and_category(start_date, end_date, category);
+      const total_fees = period_fees.reduce((sum, fee) => sum + Number(fee.amount), 0);
+      if (period_fees.length > 0) {
+        has_content = true;
+        if (!html) {
+          html += `
+            <div class="list">
+              <h2>Resultados del Reporte</h2>
+          `;
+        }
         html += `
-          <div class="list">
-            <h2>Resultados del Reporte</h2>
+          <div class="report-section">
+            <h3>Gastos</h3>
+            <p>Total: ${total_fees.toFixed(2)} Bs</p>
+            <ul>
+              ${period_fees.map(fee => `
+                <li>${fee.description}: ${Number(fee.amount).toFixed(2)} Bs (${fee.date}) - ${fee.category}</li>
+              `).join('')}
+            </ul>
+          </div>
         `;
-      }
-      html += `
-        <div class="report-section">
-          <h3>Gastos</h3>
-          <p>Total: $${total_fees.toFixed(2)}</p>
-          <ul>
-            ${period_fees.map(fee => `
-              <li>${fee.description}: $${Number(fee.amount).toFixed(2)} (${fee.date}) - ${fee.category}</li>
-            `).join('')}
-          </ul>
-        </div>
-      `;
-      if (html.includes('<div class="list">')) {
-        html += '</div>';
+        if (html.includes('<div class="list">')) {
+          html += '</div>';
+        }
       }
     }
-  }
-  results_div.innerHTML = html;
-  if (has_content) {
-    results_div.querySelector('.list').classList.add('active');
-  }
-};
+    results_div.innerHTML = html;
+    if (has_content) {
+      results_div.querySelector('.list').classList.add('active');
+    }
+  };
+}
