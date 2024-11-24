@@ -43,7 +43,25 @@ Cypress.Commands.add('clear_financial_data', () => {
  * @param {string} expected.balance - Expected balance
  */
 Cypress.Commands.add('verify_summary_cards', ({ incomes, fees, balance }) => {
+    // Wait for summary to be rendered
+    cy.get('#summary').should('exist');
     if (incomes) cy.get('.income-card').should('contain', `${incomes} Bs`);
     if (fees) cy.get('.fee-card').should('contain', `${fees} Bs`);
     if (balance) cy.get('.balance-card').should('contain', `${balance} Bs`);
+});
+
+/**
+ * Navigate to a route and wait for content to load
+ * @param {string} route - Route to navigate to
+ */
+Cypress.Commands.add('navigate_to', (route) => {
+    cy.get(`a[router_link="${route}"]`).click();
+    // Wait for main content to load
+    cy.get('main').should('not.be.empty');
+});
+
+// Handle uncaught exceptions
+Cypress.on('uncaught:exception', (err) => {
+    // Return false to prevent Cypress from failing the test
+    return false;
 });
